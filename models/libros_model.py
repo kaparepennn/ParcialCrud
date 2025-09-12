@@ -15,9 +15,6 @@ class autores(Base):
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String(255), nullable=False)
     libro_id = Column(Integer, ForeignKey("libros_id"))
-<<<<<<< HEAD
     libro = relationship("libro", back_populates="autores")
-=======
     libro = relationship("libro", back_populates="autores")
     
->>>>>>> dev
