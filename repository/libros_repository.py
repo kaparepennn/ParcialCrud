@@ -1,5 +1,5 @@
 from models.libros_model import libro, autores
-from sqlalchemy.orm import session
+from sqlalchemy.orm import session # pyright: ignore[reportMissingImports]
 
 #Repositorio para la gestión de libros en la base de datos
 

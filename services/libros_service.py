@@ -1,6 +1,6 @@
 from repository.libros_repository import autores
 from models.libros_model import Libro
-from sqlalchemy.orm import session
+from sqlalchemy.orm import session # type: ignore
 
 class BandService:
     def __init__(self, db_session: session):
