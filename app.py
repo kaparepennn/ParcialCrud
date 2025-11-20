@@ -25,9 +25,9 @@ except Exception:
 
 from flask import Flask
 from config.database import Base, engine
-from models.producto_model import Producto
+from models.libro_model import Libro
 from controllers.usuarios_controller import usuarios_bp, register_jwt_error_handlers
-from controllers.productos_controller import productos_bp
+from controllers.books_controller import books_bp
 try:
     from controllers.auth_controller import auth_bp
 except ImportError:
@@ -39,7 +39,7 @@ from flask_cors import CORS
 # Crear tablas si no existen
 Base.metadata.create_all(bind=engine)
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='frontend', static_url_path='')
 # Configurar JWT a partir de config/jwt.py (permite cargar desde .env)
 app.config['JWT_SECRET_KEY'] = JWT_SECRET_KEY
 app.config['JWT_TOKEN_LOCATION'] = JWT_TOKEN_LOCATION
@@ -65,14 +65,19 @@ CORS(app,
 
 # Registrar blueprints
 app.register_blueprint(usuarios_bp)
-app.register_blueprint(productos_bp)
+app.register_blueprint(books_bp)
 if auth_bp:
     app.register_blueprint(auth_bp)
 
 # Registrar manejadores de error JWT definidos en controllers/user_controller
 register_jwt_error_handlers(app)
+@app.route('/')
+def index():
+    return app.send_static_file('index.html')
+
 
 if __name__ == "__main__":
+    # Al ejecutar en development, servir también el frontend estático desde /
     app.run(debug=True)
 
 
